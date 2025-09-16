@@ -1,0 +1,8 @@
+.format {
+
+    flex: 1;  
+    height: 300px;
+    justify-items: center; 
+  
+    margin-top: 60px;
+}
