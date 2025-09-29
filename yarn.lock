@@ -684,7 +684,7 @@ delayed-stream@~1.0.0:
   dependencies:
     "@formkit/auto-animate" "^0.8.2"
     "@types/react-router-dom" "5.3.3"
-    axios "0.27.2"
+    axios "^1.8.4"
     dscommerce-frontend "file:"
     react "^18.3.1"
     react-dom "^18.3.1"
