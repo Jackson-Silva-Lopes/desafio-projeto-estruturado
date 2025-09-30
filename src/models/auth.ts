@@ -1,4 +1,4 @@
 export type CredentialDTO = {   
-  email: string;
+  username: string;
   password: string;
 }   

@@ -6,13 +6,19 @@ import loginRequest from "../../../services/auth-service";
 export default function Login() {
 
     const [formData, setFormData] = useState<CredentialDTO>({
-        email: "",
+        username: "",
         password: ""
     });
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         loginRequest(formData);
+    };
+
+    function handleInputChange(event: React.FormEvent<HTMLInputElement>) {
+        const { name, value } = event.currentTarget;
+
+        setFormData({ ...formData, [name]: value });
     };
 
     return (
@@ -23,11 +29,22 @@ export default function Login() {
                         <h2>Login</h2>
                         <div className="dsc-form-controls-container">
                             <div>
-                                <input className="dsc-form-control " type="text" placeholder="Email" onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                                <input className="dsc-form-control "
+                                    name="username"
+                                    type="text" placeholder="Email"
+                                    value={formData.username}
+                                    onChange={handleInputChange}
+                                />
+
                                 <div className="dsc-form-error"></div>
                             </div>
                             <div>
-                                <input className="dsc-form-control" type="password" placeholder="Senha" onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+                                <input className="dsc-form-control"
+                                    type="password"
+                                    placeholder="Senha"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleInputChange} />
                             </div>
                         </div>
 
