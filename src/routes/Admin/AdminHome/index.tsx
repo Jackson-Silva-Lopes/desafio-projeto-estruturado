@@ -4,18 +4,19 @@ import "./styles.css";
 import { UserDto } from "../../../models/user";
 import * as userService from "../../../services/user-services";
 
+
 export default function AdminHome() {
 
     const [user, setUser] = useState<UserDto>()
+
+  
 
     useEffect(() => {
      userService.findMe().then(response => {
         setUser(response.data)
         console.log(response.data)
      })
-     .catch(error => {
-        console.log("Error ao buscar usuário", error)
-     })
+    
     }, [])
     
 
