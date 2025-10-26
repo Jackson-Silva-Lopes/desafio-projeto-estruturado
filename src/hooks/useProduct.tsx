@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CategoryDTO } from "../models/category";
 import { OrderDTO } from "../models/order";
 import { ContextCartCount } from "../utils/context-carts";
+import { isAuthenticated } from "../services/auth-service";
 //import { CategoryDTO } from "../models/category";
 
 
@@ -64,6 +65,9 @@ function useProduct() {
 
 
   useEffect(() => {
+
+    console.log("Autenticado", isAuthenticated())
+    
     productServices.findPageRequest(queryParams.page, queryParams.name)
       .then(response => {
         const nextPage = response.data.content;

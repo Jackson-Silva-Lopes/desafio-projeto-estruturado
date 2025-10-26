@@ -1,9 +1,10 @@
 import QueryString from "qs";
-import { CredentialDTO } from "../models/auth";
+import { AccessTokenPayloadDTO, CredentialDTO } from "../models/auth";
 import { CLIENT_ID, CLIENT_SECRET } from "../utils/system";
 import { AxiosRequestConfig } from "axios";
 import { requestBackend } from "../utils/request";
 import * as accessTokenRepository from "../localStorage/acces-token-repository"
+import jwtDecode from "jwt-decode";
 
 
 export function loginRequest(loginData: CredentialDTO) {
@@ -14,7 +15,7 @@ export function loginRequest(loginData: CredentialDTO) {
 
 
     const requestBody = QueryString.stringify({ ...loginData, grant_type: "password" })
-  
+
 
     const config: AxiosRequestConfig = {
         method: 'POST',
@@ -24,7 +25,7 @@ export function loginRequest(loginData: CredentialDTO) {
     }
 
 
-   return requestBackend(config);
+    return requestBackend(config);
 }
 
 
@@ -36,6 +37,21 @@ export function saveAccessToken(token: string) {
     accessTokenRepository.saveAccessToken(token);
 }
 
-export  function getAccessToken(): string | null {
+export function getAccessToken(): string | null {
     return accessTokenRepository.get();
+}
+
+
+export function getAccessTokenPayload(): AccessTokenPayloadDTO | undefined {
+    try {
+        const token = accessTokenRepository.get();
+        return token == null ? undefined : (jwtDecode(token) as AccessTokenPayloadDTO);
+    } catch (error) {
+        return undefined;
+    }
+}
+
+export function isAuthenticated(): boolean {
+    let tokenPayload = getAccessTokenPayload();
+    return tokenPayload && tokenPayload.exp * 1000 > Date.now() ? true : false;
 }
