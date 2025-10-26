@@ -66,8 +66,8 @@ function useProduct() {
 
   useEffect(() => {
 
-    console.log("Autenticado", isAuthenticated())
-    
+   
+
     productServices.findPageRequest(queryParams.page, queryParams.name)
       .then(response => {
         const nextPage = response.data.content;
