@@ -10,6 +10,7 @@ export class OrderDTO {
         return  Number(sum.toFixed(2));
     }
 }
+
 export class OrderItemDTO {
     constructor(
         public productId: number,
