@@ -144,6 +144,12 @@ nav a {
   align-items: flex-end;
 }
 
+.dsc-logged-user span {
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer
+}
+
 .dsc-logged-user p {
   font-size: 12px;
 }
@@ -214,7 +220,8 @@ nav a {
   color: var(--dsc-color-font-primary);
 }
 
-.dsc-search-bar button, .dsc-search-bar input {
+.dsc-search-bar button,
+.dsc-search-bar input {
   border: 1px solid var(--dsc-color-card-border);
 }
 

@@ -5,10 +5,13 @@ import CartIcon from "../CartIcon";
 import * as authService from '../../services/auth-service'
 import { useContext } from "react";
 import { ContextToken } from "../../utils/contex-token";
+import LoggedUser from "../LoggerUser";
 
-const {contextTokenPayload} = useContext(ContextToken)
+
 
 export default function HeaderClient() {
+
+  const {contextTokenPayload} = useContext(ContextToken)
   return (
     <header className="dsc-header-client">
       <nav className="dsc-container">
@@ -32,7 +35,7 @@ export default function HeaderClient() {
               </div>
             </Link>
           </div>
-          <Link to="/login">Entrar</Link>
+          <LoggedUser />
         </div>
       </nav>
     </header>
