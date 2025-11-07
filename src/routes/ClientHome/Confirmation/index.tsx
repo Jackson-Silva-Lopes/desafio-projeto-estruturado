@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { OrderDTO } from '../../../models/order'
-import orderFindByRequest from "../../../services/order-service"
+import {orderFindByRequest} from "../../../services/order-service"
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 

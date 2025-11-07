@@ -7,7 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { CategoryDTO } from "../models/category";
 import { OrderDTO } from "../models/order";
 import { ContextCartCount } from "../utils/context-carts";
-import { hasAnyRoles, isAuthenticated } from "../services/auth-service";
+import { placeOrderRequest } from '../services/order-service';
+
 //import { CategoryDTO } from "../models/category";
 
 
@@ -20,12 +21,12 @@ function useProduct() {
   const { productId } = useParams();
   const navigate = useNavigate();
 
-  const { setContextCartCount } = useContext( ContextCartCount)
+  const { setContextCartCount } = useContext(ContextCartCount)
 
   const [isLastPage, setisLastPage] = useState(false)
 
   const [product, setproduct] = useState<ProductDTO>()
- // const [productName, setProductName] = useState("")
+  // const [productName, setProductName] = useState("")
   const [allProduct, setAllProduct] = useState<ProductDTO[]>([])
   const [cart, setCart] = useState<OrderDTO>(cartServices.getCart());
 
@@ -66,7 +67,7 @@ function useProduct() {
 
   useEffect(() => {
 
-   console.log("teste", hasAnyRoles(['ROLE_CLIENT']))
+
 
     productServices.findPageRequest(queryParams.page, queryParams.name)
       .then(response => {
@@ -78,17 +79,17 @@ function useProduct() {
   }, [queryParams])
 
 
-  function updateCart(){
-    return  setContextCartCount(cartServices.getCart().items.length)
+  function updateCart() {
+    return setContextCartCount(cartServices.getCart().items.length)
   }
 
 
   function handleByClick() {
     if (product) {
       cartServices.addProduct(product)
-   //  setContextCartCount(contextCartCount + 1)
-    updateCart()
-    }         
+      //  setContextCartCount(contextCartCount + 1)
+      updateCart()
+    }
     navigate("/cart")
 
   }
@@ -114,18 +115,32 @@ function useProduct() {
     setCart(cartServices.getCart())
     updateCart()
 
-  }  
-  
+  }
+
 
   function handleSearch(serachText: string) {
     setAllProduct([])
-    setqueryParams({... queryParams,page: 0, name: serachText})
+    setqueryParams({ ...queryParams, page: 0, name: serachText })
   }
 
 
-  function handleNextPageClick(){
-    setqueryParams({...queryParams, page: queryParams.page + 1})
+  function handleNextPageClick() {
+    setqueryParams({ ...queryParams, page: queryParams.page + 1 })
   }
+
+
+  function handlePlaceOrderClick() {
+
+    placeOrderRequest(cart)
+      .then(response => {
+        cartServices.clearCart()
+        setContextCartCount(0)
+        navigate(`/confirmation/${response.data.id}`)
+
+      })
+
+  }
+
 
   return {
     product,
@@ -137,6 +152,7 @@ function useProduct() {
     handleIncreaseItem,
     handleSearch,
     handleNextPageClick,
+    handlePlaceOrderClick,
     isLastPage
   }
 

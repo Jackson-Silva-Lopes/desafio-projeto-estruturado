@@ -4,18 +4,19 @@ import useProduct from '../../../hooks/useProduct';
 
 
 
+
 function Cart() {
 
     const {
         cart,
         handleClearClicl,
         handleDecreaseItem,
-        handleIncreaseItem
-        
-    
-      } = useProduct();
-    
-    
+        handleIncreaseItem,
+        handlePlaceOrderClick,
+
+
+    } = useProduct();
+
    
 
     return (
@@ -44,13 +45,13 @@ function Cart() {
                                                     <div className="dsc-cart-item-quantity-container">
                                                         <div onClick={() => handleDecreaseItem(item.productId)} className="dsc-cart-item-quantity-btn">-</div>
                                                         <p>{item.quantity}</p>
-                                                        <div onClick={() =>handleIncreaseItem(item.productId)} className="dsc-cart-item-quantity-btn">+</div>
+                                                        <div onClick={() => handleIncreaseItem(item.productId)} className="dsc-cart-item-quantity-btn">+</div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="dsc-cart-item-right">
 
-                                              R$  {
+                                                R$  {
                                                     item.subTotal
                                                 }
                                             </div>
@@ -62,7 +63,7 @@ function Cart() {
                                     <h3>  R$ {
 
                                         cart.total
-                                    } 
+                                    }
 
                                     </h3>
                                 </div>
@@ -72,18 +73,18 @@ function Cart() {
                 }
 
                 <div className="dsc-btn-page-container">
-                    <div className="dsc-btn dsc-btn-white">
+                    <div onClick={handlePlaceOrderClick} className="dsc-btn dsc-btn-white">
                         Finalizar pedido
                     </div>
                     <Link to={"/catalog"}>
-                    <div className="dsc-btn dsc-btn-white">
-                        Continuar comprando
-                    </div>
+                        <div className="dsc-btn dsc-btn-white">
+                            Continuar comprando
+                        </div>
                     </Link>
                     <div onClick={handleClearClicl} className="dsc-btn dsc-btn-white">
-                       Limpar Carrinho
+                        Limpar Carrinho
                     </div>
-                    
+
                 </div>
             </section>
         </main>
