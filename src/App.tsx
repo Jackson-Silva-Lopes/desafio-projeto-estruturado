@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, NavigationType, Route, Routes } from "react-router-dom";
 import Catalog from "./routes/ClientHome/Catalog";
 import ProductDetails from "./routes/ClientHome/ProductDetails";
 import ClientHome from "./routes/ClientHome";
@@ -16,6 +16,9 @@ import { ContextToken } from "./utils/contex-token";
 import * as authService from "./services/auth-service"
 import * as cartService from "./services/cart-services"
 import Confirmation from "./routes/ClientHome/Confirmation";
+import ProductListing from "./routes/Admin/ProductListing";
+import ProductForm from "./routes/Admin/ProductForm";
+
 
 
 function App() {
@@ -51,7 +54,10 @@ function App() {
                 <Admin />
               </PrivateRoute>
             }>
-              <Route index element={<AdminHome />} />
+              <Route index element={<Navigate to="/admin/home" />} />
+                <Route path="home"  element={<AdminHome />} />
+              <Route path="products" element={<ProductListing />} />
+                <Route path="products/:productId" element={<ProductForm />} />
             </Route>
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
